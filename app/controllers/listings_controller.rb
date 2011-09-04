@@ -27,7 +27,11 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing = Listing.find(params[:id])
+    if (Listing.exists?(params[:id]))
+      @listing = Listing.find_by_id(params[:id])
+    else
+      redirect_to(listings_url)
+    end
   end
 
   def edit
@@ -37,6 +41,13 @@ class ListingsController < ApplicationController
   end
 
   def destroy
+    if (Listing.exists?(params[:id]))
+      @listing = Listing.find(params[:id])
+      if (params[:password]) && (@listing.user.password == params[:password])
+        @listing.destroy
+      end
+    end
+    redirect_to(listings_url)
   end
 
 end
