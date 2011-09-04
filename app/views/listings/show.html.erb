@@ -1,0 +1,24 @@
+<h1><%= t 'listings.show.listing'%></h1>
+<% if (params[:password]) && (@listing.user.password == params[:password])%>
+    <%= link_to 'Edit', edit_listing_path(@listing) %>
+    <%= link_to 'Destroy', @listing, :confirm => 'Are you sure?', :method => :delete %>
+<%end%>
+<p id="notice"><%= notice %></p>
+<p>
+    <table>
+            <tr><td align="right"><%=  t 'listings.show.source_amount' %>: </td><td><%= @listing.source_amount %></td></tr>
+            <tr><td align="right"><%=  t 'listings.show.source_type' %></td><td><%= t "listings.types.#{@listing.source_type}" %></td></tr>
+            <tr><td><br/></td><td></td></tr>
+            <tr><td align="right"><%=  t 'listings.show.rate' %>: </td><td><%= @listing.rate %></td></tr>
+            <tr><td><br/></td><td></td></tr>
+            <tr><td align="right"><%=  t 'listings.show.target_amount' %>: </td><td><%= @listing.target_amount %></td></tr>
+            <tr><td align="right"><%=  t 'listings.show.target_type' %></td><td><%=t "listings.types.#{@listing.target_type}" %></td></tr>
+            <tr><td><br/></td><td></td></tr>
+            <tr><td align="right"><%=  t 'listings.show.remarks' %>: </td><td><%= @listing.remarks %></td></tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <tr><td align="right"><%=  t 'listings.show.name' %></td><td><%= @listing.user.name  %></td></tr>
+            <tr><td align="right"><%=  t 'listings.show.phone' %></td><td><%= @listing.user.phone  %></td></tr>
+            <tr><td align="right"><%=  t 'listings.show.contact' %></td><td><%= @listing.user.contact   %></td></tr>
+    </table>
+</p>

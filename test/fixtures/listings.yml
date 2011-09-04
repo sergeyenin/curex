@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  source_amount: MyString
+  source_type: MyString
+  rate: MyString
+  target_amount: MyString
+  target_type: MyString
+  remarks: MyString
+
+two:
+  user_id: 1
+  source_amount: MyString
+  source_type: MyString
+  rate: MyString
+  target_amount: MyString
+  target_type: MyString
+  remarks: MyString

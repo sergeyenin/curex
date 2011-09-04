@@ -1,0 +1,34 @@
+ru:
+  listings:
+    types:
+      1: "Белорусские драники"
+      2: "Американские гамбургеры"
+      3: "Европейские шницели"
+      4: "Российские щи"
+    new:
+      new_listing: "Новое объявление"
+      create_listing: "Создать"
+      source_amount: "Я готов ОТДАТЬ"
+      source_type: "в валюте"
+      rate: "по курсу"
+      target_amount: "Я хочу ПОЛУЧИТЬ"
+      target_type: "в валюте"
+      remarks: "Примечание"
+      name: "Имя"
+      phone: "Телефон"
+      password: "Пароль(для редактирования и удаления объявления)"
+      contact: "Где меня найти"
+      created: "Для того, чтобы его удалить \
+      необходимо перейти по "
+      link: "ссылке"
+    show:
+      listing: "Объявление"
+      source_amount: "Готов ОТДАТЬ"
+      source_type: "валюта"
+      rate: "курс"
+      target_amount: "Хочу ПОЛУЧИТЬ"
+      target_type: "валюта"
+      remarks: "Примечание"
+      name: "Имя"
+      phone: "Телефон"
+      contact: "Как найти"
