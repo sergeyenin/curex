@@ -1,8 +1,8 @@
 <h1><%= t 'listings.show.listing'%>(<%= t 'listings.show.created' %>: <%= l @listing.created_at, :format=>:date_time24  %>)</h1>
 
-<% if (params[:password]) && (@listing.user.password == params[:password])%>
-    <%= link_to t('listings.show.edit'), (edit_listing_path(@listing) + "/" + @listing.user.password) %>
-    <%= link_to t('listings.show.destroy'), (listing_url(@listing) + "/" + @listing.user.password), :confirm => t('listings.show.destroy_confirm'), :method => :delete %>
+<% if (params[:password]) && ( @listing.password_or_master_password?(params[:password]) )%>
+    <%= link_to t('listings.show.edit'), (edit_listing_path(@listing) + "/" + params[:password]) %>
+    <%= link_to(t('listings.show.destroy'), (listing_url(@listing) + "/" + params[:password]), :confirm => t('listings.show.destroy_confirm'), :method => :delete) %>
 <%end%>
 <p id="notice"><%= notice %></p>
 <p>
@@ -23,3 +23,5 @@
             <tr><td align="right"><%=  t 'listings.show.contact' %></td><td><%= @listing.user.contact   %></td></tr>
     </table>
 </p>
+<br />
+<%= link_to t('listings.edit.listings'), listings_path %>

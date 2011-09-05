@@ -5,9 +5,10 @@
 
   <% if (@yui) %>
     <%= stylesheet_link_tag 'scaffold', 'datatable' %>
-    <%= javascript_include_tag 'yahoo-dom-event', 'connection-min', 'element-min', 'paginator-min', 'json-min', 'datasource-min', 'datatable-min' %>
+    <%= javascript_include_tag 'prototype', 'rails', 'application','yahoo-dom-event', 'connection-min', 'element-min', 'paginator-min', 'json-min', 'datasource-min', 'datatable-min' %>
   <% else %>
     <%= stylesheet_link_tag 'scaffold' %>
+    <%= javascript_include_tag 'prototype','rails', 'application'%>
   <% end %>
 
   <%#= javascript_include_tag :defaults %>

@@ -23,9 +23,12 @@ ru:
       rate: "Курс"
       target_amount: "Требуемая сумма"
       target_type: "Требуемая валюта"
-      urgency: "Актуальность"
+      urgency: "Создано, времени назад"
       link: "Ссылка"
       show: "Просмотреть"
+      one_day: "день"
+      2_4_days: "дня"
+      many_days: "дней"
     new:
       new_listing: "Новое объявление"
       create_listing: "Создать"

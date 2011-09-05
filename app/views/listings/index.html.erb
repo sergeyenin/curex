@@ -17,6 +17,43 @@ YAHOO.example.DynamicData = function() {
            };
     YAHOO.widget.DataTable.Formatter.listing_urlFormatter = listing_urlFormatter;
 
+    var customDateFormatter = function(elLiner, oRecord, oColumn, oData) {
+                   var recordDate = new Date(oData);
+                   var currentTime = new Date();
+
+                   var dateDifference = new Date(currentTime.getTime() - recordDate.getTime());
+
+                   var renderedValue = "";
+                   //days
+                   if (dateDifference.getDate() == 1){
+
+                       renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.one_day' %>");
+                   }
+                   else if ( (dateDifference.getDate() >= 2) && (dateDifference.getDate() <=4) ){
+
+                       renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.2_4_days' %>");
+                   }
+                   else if (dateDifference.getDate() > 4){
+
+                       renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.many_days' %>");
+                   }
+                   renderedValue += (" ");
+                   // hours
+                   var tempHours = "";
+                   while ( (tempHours.length + dateDifference.getHours().toString().length)< 2)
+                     tempHours += ("0");
+                   renderedValue += (tempHours + dateDifference.getHours().toString());
+                   //minutes
+                   renderedValue += (":");
+                   var tempMinutes = "";
+                   while ( (tempMinutes.length + dateDifference.getMinutes().toString().length)< 2)
+                     tempMinutes += ("0");
+                   renderedValue += (tempMinutes + dateDifference.getMinutes().toString());
+
+                   elLiner.innerHTML = renderedValue;
+               };
+    YAHOO.widget.DataTable.Formatter.customDateFormatter = customDateFormatter;
+
     // Column definitions
     var myColumnDefs = [ // sortable:true enables sorting
         {key:"source_amount", label:"<%=t 'listings.index.source_amount' %>", sortable:true},
@@ -24,17 +61,9 @@ YAHOO.example.DynamicData = function() {
         {key:"rate", label:"<%=t 'listings.index.rate' %>", sortable:true},
         {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
         {key:"target_type", label:"<%=t 'listings.index.target_type' %>", sortable:true},
-        {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true},
+        {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true, formatter:"customDateFormatter"},
         {key:"link", label:"<%=t 'listings.index.link' %>", sortable:false, formatter:"listing_urlFormatter"}
     ];
-//
-//    // Custom parser
-//    var stringToDate = function(sData) {
-//        var array = sData.split("-");
-//        return new Date(array[1] + " " + array[0] + ", " + array[2]);
-//    };
-//
-
 
     // DataSource instance
     var myDataSource = new YAHOO.util.DataSource("/listings/get_index/");

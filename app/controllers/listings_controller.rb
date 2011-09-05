@@ -9,7 +9,7 @@ class ListingsController < ApplicationController
   def get_index
     returnValue = Hash.new
     records = Array.new
-    @listings = Listing.all(:order => 'created_at')
+    @listings = Listing.all(:order => 'created_at desc')
 
     @listings.each do |listing|
       tempHash = {}
@@ -69,7 +69,7 @@ class ListingsController < ApplicationController
   def edit
       if (Listing.exists?(params[:id]))
         @listing = Listing.find(params[:id])
-        if (params[:password]) && (@listing.user.password == params[:password])
+        if (params[:password]) && (@listing.password_or_master_password?(params[:password]))
           @user = @listing.user
         else
           redirect_to(listings_url)
@@ -80,7 +80,7 @@ class ListingsController < ApplicationController
   def update
     if (Listing.exists?(params[:id]))
         @listing = Listing.find(params[:id])
-        if (params[:password]) && (@listing.user.password == params[:password])
+        if (params[:password]) && (@listing.password_or_master_password?(params[:password]))
           #I hate accepts_nested_attributes_for!!!!
           @user = @listing.user
           @user.update_attributes(params[:listing][:user])
@@ -98,7 +98,7 @@ class ListingsController < ApplicationController
   def destroy
     if (Listing.exists?(params[:id]))
       @listing = Listing.find(params[:id])
-      if (params[:password]) && (@listing.user.password == params[:password])
+      if (params[:password]) && (@listing.password_or_master_password?(params[:password]))
         @listing.destroy
       end
     end
