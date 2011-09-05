@@ -5,6 +5,7 @@
     <%= link_to(t('listings.show.destroy'), (listing_url(@listing) + "/" + params[:password]), :confirm => t('listings.show.destroy_confirm'), :method => :delete) %>
 <%end%>
 <p id="notice"><%= notice %></p>
+<p id="alert"><%= alert %></p>
 <p>
     <table>
             <tr><td align="right"><%=  t 'listings.show.source_amount' %>: </td><td><%= @listing.source_amount %></td></tr>

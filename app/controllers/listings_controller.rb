@@ -7,6 +7,12 @@ class ListingsController < ApplicationController
   end
 
   def get_index
+    #
+    if (cookies[:my_links])
+      links = (Marshal.load(cookies[:my_links]))
+    else
+      links = Array.new
+    end
     returnValue = Hash.new
     records = Array.new
     @listings = Listing.all(:order => 'created_at desc')
@@ -21,7 +27,14 @@ class ListingsController < ApplicationController
       tempHash["target_type"] = t("listings.types")[listing.target_type.to_i]
       #time difference in seconds
       tempHash["urgency"] = Time.now() - listing.created_at.to_datetime
-      tempHash["link"] = listing_url(listing)
+      tempHash["contact"] = listing.contact
+      tempHash["comment"] = listing.remarks
+
+      if (links.include?(listing.id))
+        tempHash["link"] = "<a href=\"" +  (listing_url(listing) + "/" + listing.user.password) + "\">#{ t 'listings.index.edit' }</a>"
+      else
+        tempHash["link"] = "<a href=\"" + listing_url(listing)+ "\">#{ t 'listings.index.show' }</a>"
+      end
       records.push(tempHash)
     end
     returnValue["records"] = records
@@ -65,7 +78,18 @@ class ListingsController < ApplicationController
     @listing.user = @user
 
     if @listing.save
-        redirect_to(@listing, :notice => (t('listings.new.created') + " #{view_context.link_to( t('listings.new.link'), (listing_url(@listing) + "/" + @user.password) )}").html_safe )
+        #strange style of login
+        if (cookies[:my_links])
+          links = (Marshal.load(cookies[:my_links]))
+        else
+          links = Array.new
+        end
+        links.push(@listing.id) unless (links.include?(@listing.id))
+        cookies[:my_links] = {
+          :value => Marshal.dump(links),
+          :expires => 1.month.from_now
+        }
+        redirect_to(@listing, :notice => (t('listings.new.created') + " #{view_context.link_to( t('listings.new.link'), (listing_url(@listing) + "/" + @user.password) )}").html_safe, :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe  )
     else
         render :action => "new"
     end
@@ -74,6 +98,12 @@ class ListingsController < ApplicationController
   def show
     if (Listing.exists?(params[:id]))
       @listing = Listing.find_by_id(params[:id])
+      @current_user_admin = false
+      if (cookies[:my_links])
+        links = (Marshal.load(cookies[:my_links]))
+        @current_user_admin= true if (links.include?(@listing.id))
+      end
+      params[:password] = @listing.user.password if (@current_user_admin)
     else
       redirect_to(listings_url)
     end
@@ -105,7 +135,7 @@ class ListingsController < ApplicationController
           params[:listing].delete(:user)
 
           if @listing.update_attributes(params[:listing])
-            redirect_to(@listing, :notice => (t('listings.new.created') + " #{view_context.link_to( t('listings.new.link'), (listing_url(@listing) + "/" + @user.password) )}").html_safe )
+            redirect_to(@listing, :notice => (t('listings.new.created') + " #{view_context.link_to( t('listings.new.link'), (listing_url(@listing) + "/" + @user.password) )}").html_safe, :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe )
           else
             render :action => "edit"
           end

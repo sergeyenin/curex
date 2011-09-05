@@ -122,6 +122,9 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
             {key:"target_type", label:"<%=t 'listings.index.target_type' %>", sortable:true},
             {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true, formatter:"customDateFormatter"},
+            {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
+            {key:"contact", label:"<%=t 'listings.index.contact' %>", sortable:false},
+            {key:"remarks", label:"<%=t 'listings.index.remarks' %>", sortable:false},
             {key:"link", label:"<%=t 'listings.index.link' %>", sortable:false, formatter:"listing_urlFormatter"}
         ];
 
@@ -137,6 +140,8 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key:"target_amount"},
             {key:"target_type"},
             {key: "urgency"},
+            {key:"contact"},
+            {key:"remarks"},
             {key: "link"}
             ],
             metaFields: {

@@ -1,3 +1,25 @@
+<%= javascript_tag do %>
+    function calculateTargetAmount(){
+        var mult1 = parseFloat($('listing_source_amount').value);
+        var mult2 = parseFloat($('listing_rate').value);
+
+        if ( !isNaN(mult1) && !isNaN(mult2) ){
+            $('listing_target_amount').value = new String(mult1 * mult2);
+        }
+        return null;
+    }
+    document.observe("dom:loaded", function() {
+
+      $('listing_source_amount').observe('keyup', function(event) {
+        calculateTargetAmount();
+      });
+      $('listing_rate').observe('keyup', function(event) {
+        calculateTargetAmount();
+      });
+    });
+
+<% end %>
+
     <%= form_for (@listing) do |listing_form| %>
         <%= (hidden_field_tag :password, params[:password]) if (params[:password]) %>
         <% if @listing.errors.any? %>
