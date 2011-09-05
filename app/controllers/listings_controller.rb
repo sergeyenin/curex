@@ -19,7 +19,7 @@ class ListingsController < ApplicationController
       tempHash["rate"] = listing.rate
       tempHash["target_amount"] = listing.target_amount
       tempHash["target_type"] = t("listings.types")[listing.target_type.to_i]
-      tempHash["urgency"] = listing.created_at
+      tempHash["urgency"] = listing.created_at.to_datetime
       tempHash["link"] = listing_url(listing)
       records.push(tempHash)
     end

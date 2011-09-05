@@ -21,22 +21,22 @@ YAHOO.example.DynamicData = function() {
                    var recordDate = new Date(oData);
                    var currentTime = new Date();
 
-                   var dateDifference = new Date(currentTime.getTime() - recordDate.getTime());
-
+                   var dateDifference = new Date(currentTime.getTime() - recordDate.getTime()/* + recordDate.getTimezoneOffset() * 60 * 1000*/);
                    var renderedValue = "";
                    //days
-                   if (dateDifference.getDate() == 1){
+                   if ( (dateDifference.getDate()-1) == 0){
 
                        renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.one_day' %>");
                    }
-                   else if ( (dateDifference.getDate() >= 2) && (dateDifference.getDate() <=4) ){
+                   else if ( ((dateDifference.getDate()-1) >= 1) && ((dateDifference.getDate()-1) <=3) ){
 
                        renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.2_4_days' %>");
                    }
-                   else if (dateDifference.getDate() > 4){
+                   else if ((dateDifference.getDate()-1) > 3){
 
                        renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.many_days' %>");
                    }
+
                    renderedValue += (" ");
                    // hours
                    var tempHours = "";
