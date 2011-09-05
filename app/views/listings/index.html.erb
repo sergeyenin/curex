@@ -15,7 +15,7 @@ YAHOO.example.DynamicData = function() {
         var d = Math.round(x/y - x%y/y);
         if (d>z) d %= z;
         var returnValue = "";
-        if (d>1){
+        if (d>0){
             returnValue = d.toString();
         }
         else{
