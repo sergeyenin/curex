@@ -1,4 +1,5 @@
 Curex::Application.routes.draw do
+  match 'listings/:id/edit/:password' => 'listings#edit'
   delete 'listings/:id/:password' => 'listings#destroy'
   match 'listings/:id/:password' => 'listings#show'
   resources :listings

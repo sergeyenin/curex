@@ -1,7 +1,7 @@
 <h1><%= t 'listings.show.listing'%></h1>
 
 <% if (params[:password]) && (@listing.user.password == params[:password])%>
-    <%= link_to t('listings.show.edit'), edit_listing_path(@listing) %>
+    <%= link_to t('listings.show.edit'), (edit_listing_path(@listing) + "/" + @listing.user.password) %>
     <%= link_to t('listings.show.destroy'), (listing_url(@listing) + "/" + @listing.user.password), :confirm => t('listings.show.destroy_confirm'), :method => :delete %>
 <%end%>
 <p id="notice"><%= notice %></p>

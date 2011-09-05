@@ -1,23 +1,4 @@
 <h1><%= t 'listings.new.new_listing'%></h1>
-    <table>
-        <%= form_for (@listing) do |listing_form| %>
-            <tr><td align="right"><%=  t 'listings.show.source_amount' %>: </td><td><%= listing_form.text_field :source_amount %></td></tr>
-            <tr><td align="right"><%=  t 'listings.new.source_type' %></td><td><%= listing_form.select     :source_type, t('listings.types').map{|key, value| [value, key]}, {:selected=>2} %></td></tr>
-            <tr><td><br/></td><td></td></tr>
-            <tr><td align="right"><%=  t 'listings.new.rate' %>: </td><td><%= listing_form.text_field :rate %></td></tr>
-            <tr><td><br/></td><td></td></tr>
-            <tr><td align="right"><%=  t 'listings.new.target_amount' %>: </td><td><%= listing_form.text_field :target_amount %></td></tr>
-            <tr><td align="right"><%=  t 'listings.new.target_type' %></td><td><%= listing_form.select     :target_type, t('listings.types').map{|key, value| [value, key]}, {:selected=>1} %></td></tr>
-            <tr><td><br/></td><td></td></tr>
-            <tr><td align="right"><%=  t 'listings.new.remarks' %>: </td><td><%= listing_form.text_area  :remarks, :cols=>40, :rows=>5  %></td></tr>
-            <tr><td colspan="2"><hr></td></tr>
-            <%= listing_form.fields_for @listing.user do |user_fields| %>
-                <tr><td align="right"><%=  t 'listings.new.name' %></td><td><%= user_fields.text_field :name  %></td></tr>
-                <tr><td align="right"><%=  t 'listings.new.phone' %></td><td><%= user_fields.text_field :phone  %></td></tr>
-                <tr><td align="right" width="250"><%=  t 'listings.new.password' %></td><td><%= user_fields.text_field :password %></td></tr>
-                <tr><td align="right"><%=  t 'listings.new.contact' %></td><td><%= user_fields.text_area  :contact, :cols=>40, :rows=>2   %></td></tr>
-            <% end %>
-            <tr><td></td><td><%= listing_form.submit t 'listings.new.create_listing' %></td></tr>
-        <% end %>
-    </table>
+<p>
+    <%= render 'form' %>
 </p>

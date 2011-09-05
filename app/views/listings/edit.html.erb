@@ -1,2 +1,5 @@
-<h1>Listings#edit</h1>
-<p>Find me in app/views/listings/edit.html.erb</p>
+<h1><%= t 'listings.edit.edit_listing' %></h1>
+
+<%= render 'form' %>
+
+<%= link_to t('listings.edit.listings'), listings_path %>
