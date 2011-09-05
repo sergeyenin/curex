@@ -23,7 +23,7 @@ ru:
       rate: "По"
       target_amount: "Сумма"
       target_type: "Приму"
-      urgency: "Создано, часов назад"
+      urgency: "Обновлено, часов назад"
       contact: "Контакт"
       remarks: "Примечание"
       link: "Ссылка"
