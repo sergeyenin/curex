@@ -9,6 +9,8 @@ ru:
       submit: "Обновить"
     new:
       submit: "Создать"
+    create:
+      submit: "Создать"
   listings:
     types:
       1: "Белорусские драники"
@@ -18,10 +20,10 @@ ru:
     index:
       listings: "Объявления"
       new_listing: "Создать новое объявление"
-      source_amount: "Сумма"
+      source_amount: "В сумме"
       source_type: "Избавлюсь от"
       rate: "По"
-      target_amount: "Сумма"
+      target_amount: "В сумме"
       target_type: "Приму"
       urgency: "Обновлено, часов назад"
       contact: "Контакт"
@@ -37,11 +39,11 @@ ru:
     new:
       new_listing: "Новое объявление"
       create_listing: "Создать"
-      source_amount: "Я готов ОТДАТЬ"
-      source_type: "избавлюсь"
+      source_amount: "В сумме"
+      source_type: "Избавлюсь от"
       rate: "по"
-      target_amount: "Я хочу ПОЛУЧИТЬ"
-      target_type: "приму"
+      target_amount: "В сумме"
+      target_type: "Приму"
       remarks: "Примечание"
       name: "Имя"
       password: "Пароль(для редактирования и удаления объявления)"
@@ -51,15 +53,16 @@ ru:
       password_alert: "Ваш пароль: "
       link: "ссылке"
       errors: "ошибок"
+      required: "* - поле обязательно для заполнения"
     show:
       password_prompt: "Введите пароль к объявлению"
       listing: "Объявление"
       created: "создано"
-      source_amount: "Готов ОТДАТЬ"
-      source_type: "избавлюсь"
+      source_amount: "В сумме"
+      source_type: "Избавлюсь от"
       rate: "по"
-      target_amount: "Хочу ПОЛУЧИТЬ"
-      target_type: "приму"
+      target_amount: "В сумме"
+      target_type: "Приму"
       remarks: "Примечание"
       name: "Имя"
       contact: "Как найти"

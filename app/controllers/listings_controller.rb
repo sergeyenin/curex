@@ -63,30 +63,30 @@ class ListingsController < ApplicationController
     #I hate accepts_nested_attributes_for!!!!
     @user = User.new(params[:listing][:user])
     params[:listing].delete(:user)
-    @user.save
-
-    #listing itself
     @listing = Listing.new(params[:listing])
     @listing.user = @user
+    if (@user.save)
+      #listing itself
 
-    if @listing.save
-        #strange style of login
-        if (cookies[:my_links])
-          links = (Marshal.load(cookies[:my_links]))
-        else
-          links = Array.new
-        end
-        links.push(@listing.id) unless (links.include?(@listing.id))
-        cookies[:my_links] = {
-          :value => Marshal.dump(links),
-          :expires => 1.month.from_now
-        }
-        redirect_to((listing_url(@listing) + "/" + @user.password),\
-          :notice => (t('listings.new.created') +\
-              " #{view_context.link_to( t('listings.new.link'), (listing_url(@listing) + "/" + @user.password) )}").html_safe,\
-                  :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe  )
+      if @listing.save
+          #strange style of login
+          if (cookies[:my_links])
+            links = (Marshal.load(cookies[:my_links]))
+          else
+            links = Array.new
+          end
+          links.push(@listing.id) unless (links.include?(@listing.id))
+          cookies[:my_links] = {
+            :value => Marshal.dump(links),
+            :expires => 1.month.from_now
+          }
+          redirect_to((listing_url(@listing) + "/" + @user.password),\
+            :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe  )
+      else
+          render :action => "new"
+      end
     else
-        render :action => "new"
+      render :action => "new"
     end
   end
 
@@ -117,7 +117,9 @@ class ListingsController < ApplicationController
         else
           redirect_to(listings_url)
         end
-    end
+      else
+        redirect_to(listings_url)
+      end
   end
 
   def update
@@ -136,13 +138,13 @@ class ListingsController < ApplicationController
 
           if @listing.update_attributes(params[:listing])
             redirect_to((listing_url(@listing) + "/" + @user.password),\
-              :notice => (t('listings.new.created') +\
-               " #{view_context.link_to( t('listings.new.link'), (listing_url(@listing) + "/" + @user.password) )}").html_safe,\
-                  :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe )
+              :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe )
           else
             render :action => "edit"
           end
         end
+    else
+      redirect_to(listings_url)
     end
   end
 

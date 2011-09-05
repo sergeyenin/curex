@@ -121,11 +121,11 @@ YAHOO.util.Event.addListener(window, "load", function() {
 
         // Column definitions
         var myColumnDefs = [ // sortable:true enables sorting
-            {key:"source_amount", label:"<%=t 'listings.index.source_amount' %>", sortable:true},
             {key:"source_type", label:"<%=t 'listings.index.source_type' %>", sortable:true},
+            {key:"source_amount", label:"<%=t 'listings.index.source_amount' %>", sortable:true},
             {key:"rate", label:"<%=t 'listings.index.rate' %>", sortable:true, formatter: "markFormatter"},
-            {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
             {key:"target_type", label:"<%=t 'listings.index.target_type' %>", sortable:true},
+            {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
             {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true, formatter:"customDateFormatter"},
             {key:"contact", label:"<%=t 'listings.index.contact' %>", sortable:false},
             {key:"remarks", label:"<%=t 'listings.index.remarks' %>", sortable:false},
@@ -138,11 +138,11 @@ YAHOO.util.Event.addListener(window, "load", function() {
         myDataSource.responseSchema = {
             resultsList: "records",
             fields: [
-            {key:"source_amount"},
             {key:"source_type"},
+            {key:"source_amount"},
             {key:"rate"},
-            {key:"target_amount"},
             {key:"target_type"},
+            {key:"target_amount"},
             {key: "urgency"},
             {key:"contact"},
             {key:"remarks"},
