@@ -39,15 +39,27 @@ class ListingsController < ApplicationController
     @listing = Listing.new
     @listing.source_type = 2
     @listing.target_type = 1
-    @user = @listing.build_user
+
+    if cookies[:listing_user]
+      @user = @listing.build_user(Marshal.load(cookies[:listing_user]))
+    else
+      @user = @listing.build_user()
+    end
   end
 
   def create
+    #cookies
+    cookies[:listing_user] = {
+      :value => Marshal.dump(params[:listing][:user]),
+      :expires => 1.month.from_now
+    }
+
     #I hate accepts_nested_attributes_for!!!!
     @user = User.new(params[:listing][:user])
     params[:listing].delete(:user)
     @user.save
 
+    #listing itself
     @listing = Listing.new(params[:listing])
     @listing.user = @user
 
@@ -81,6 +93,11 @@ class ListingsController < ApplicationController
     if (Listing.exists?(params[:id]))
         @listing = Listing.find(params[:id])
         if (params[:password]) && (@listing.password_or_master_password?(params[:password]))
+          #cookies
+          cookies[:listing_user] = {
+            :value => Marshal.dump(params[:listing][:user]),
+            :expires => 1.month.from_now
+          }
           #I hate accepts_nested_attributes_for!!!!
           @user = @listing.user
           @user.update_attributes(params[:listing][:user])
