@@ -1,7 +1,43 @@
 <h1><%= t 'listings.index.listings' %></h1>
 <p><%= link_to( t('listings.index.new_listing'), new_listing_url) %></p>
-<p>
 
+<style type="text/css">
+#doc {
+	width: 700px;
+	margin: 0 auto;
+}
+#hd {
+	text-align: center;
+}
+.yui-skin-sam .yui-dt .yui-dt-col-state1,
+.yui-skin-sam .yui-dt .yui-dt-col-state2,
+.yui-skin-sam .yui-dt .yui-dt-col-state3 {
+	width: 133px;
+	text-align: right;
+}
+#containerContainer {
+	width: 100%;
+	height: 64px;
+	padding: 8px 0;
+}
+#genderRadioContainer {
+	float: left;
+	width: 301px;
+}
+</style>
+<!--
+<div id="containerContainer">
+    <div id="currRadioContainer">
+    <p><%= t 'listings.index.select_curr' %></p>
+        <input type="radio" name="currButton" value="<%= t 'listings.index.all' %>" checked>
+        <% t('listings.types').each do |key,value| %>
+            <input id="<%= key %>" type="radio" name="currButton" value="<%= value %>">
+        <% end %>
+    </div>
+</div>
+-->
+<p>
+    <br />
 </p>
 
 <!--BEGIN SOURCE CODE FOR data table =============================== -->
@@ -9,119 +45,128 @@
 <div id="dynamicdata"></div>
 
 <script type="text/javascript">
-YAHOO.example.DynamicData = function() {
-    //div implementation
-    function integerDivision(x, y, z){
-        var d = Math.round(x/y - x%y/y);
-        if (d>z) d %= z;
-        var returnValue = "";
-        if (d>0){
-            returnValue = d.toString();
+YAHOO.util.Event.addListener(window, "load", function() {
+    YAHOO.curex.DynamicData = function() {
+//        // localside filtering data
+//        YAHOO.util.Event.on('currButton','click',function (e) {
+//            //setTimeout(Ex.updateFilter,600);
+//            alert("changed");
+//        });
+//        // Create the Radio Buttons for selecting a gender filter.
+//        var currButtons = new YAHOO.widget.ButtonGroup('currRadioContainer');
+        //div implementation
+        function integerDivision(x, y, z){
+            var d = Math.round(x/y - x%y/y);
+            if (d>z) d %= z;
+            var returnValue = "";
+            if (d>0){
+                returnValue = d.toString();
+            }
+            else{
+                returnValue = "00";
+            }
+            return returnValue;
         }
-        else{
-            returnValue = "00";
-        }
-        return returnValue;
-    }
-    //custom formatters
-    var listing_urlFormatter = function(elLiner, oRecord, oColumn, oData) {
-               var link = oData;
-               elLiner.innerHTML = "<a href=\"" + link + "\"><%= t 'listings.index.show' %></a>";
-           };
-    YAHOO.widget.DataTable.Formatter.listing_urlFormatter = listing_urlFormatter;
-
-    var customDateFormatter = function(elLiner, oRecord, oColumn, oData) {
-
-                   var dateDifference =oData;
-                   var renderedValue = "";
-                   //days
-                   var days = integerDivision(dateDifference, (60*60*24), 1000);
-                   if ( days == 1){
-
-                       renderedValue += (days+ " <%= t 'listings.index.one_day' %>");
-                   }
-                   else if ( ( days >= 2) && (days <=4) ){
-
-                       renderedValue += (days + " <%= t 'listings.index.2_4_days' %>");
-                   }
-                   else if (days > 4){
-
-                       renderedValue += (days + " <%= t 'listings.index.many_days' %>");
-                   }
-
-                   renderedValue += (" ");
-
-                   // hours
-                   var hours = integerDivision(dateDifference, (60*60), 24);
-                   var tempHours = "";
-                   while ( (tempHours.length +hours.toString().length)< 2)
-                     tempHours += ("0");
-                   renderedValue += (tempHours + hours.toString());
-
-                   //minutes
-                   var minutes = integerDivision(dateDifference, (60), 60);
-                   renderedValue += (":");
-                   var tempMinutes = "";
-                   while ( (tempMinutes.length + minutes.toString().length)< 2)
-                     tempMinutes += ("0");
-                   renderedValue += (tempMinutes + minutes.toString());
-
-                   elLiner.innerHTML = renderedValue;
+        //custom formatters
+        var listing_urlFormatter = function(elLiner, oRecord, oColumn, oData) {
+                   var link = oData;
+                   elLiner.innerHTML = "<a href=\"" + link + "\"><%= t 'listings.index.show' %></a>";
                };
-    YAHOO.widget.DataTable.Formatter.customDateFormatter = customDateFormatter;
+        YAHOO.widget.DataTable.Formatter.listing_urlFormatter = listing_urlFormatter;
 
-    // Column definitions
-    var myColumnDefs = [ // sortable:true enables sorting
-        {key:"source_amount", label:"<%=t 'listings.index.source_amount' %>", sortable:true},
-        {key:"source_type", label:"<%=t 'listings.index.source_type' %>", sortable:true},
-        {key:"rate", label:"<%=t 'listings.index.rate' %>", sortable:true},
-        {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
-        {key:"target_type", label:"<%=t 'listings.index.target_type' %>", sortable:true},
-        {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true, formatter:"customDateFormatter"},
-        {key:"link", label:"<%=t 'listings.index.link' %>", sortable:false, formatter:"listing_urlFormatter"}
-    ];
+        var customDateFormatter = function(elLiner, oRecord, oColumn, oData) {
 
-    // DataSource instance
-    var myDataSource = new YAHOO.util.DataSource("/listings/get_index/");
-    myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
-    myDataSource.responseSchema = {
-        resultsList: "records",
-        fields: [
-        {key:"source_amount"},
-        {key:"source_type"},
-        {key:"rate"},
-        {key:"target_amount"},
-        {key:"target_type"},
-        {key: "urgency"},
-        {key: "link"}
-        ],
-        metaFields: {
-            totalRecords: "totalRecords" // Access to value in the server response
+                       var dateDifference =oData;
+                       var renderedValue = "";
+                       //days
+                       var days = integerDivision(dateDifference, (60*60*24), 1000);
+                       if ( days == 1){
+
+                           renderedValue += (days+ " <%= t 'listings.index.one_day' %>");
+                       }
+                       else if ( ( days >= 2) && (days <=4) ){
+
+                           renderedValue += (days + " <%= t 'listings.index.2_4_days' %>");
+                       }
+                       else if (days > 4){
+
+                           renderedValue += (days + " <%= t 'listings.index.many_days' %>");
+                       }
+
+                       renderedValue += (" ");
+
+                       // hours
+                       var hours = integerDivision(dateDifference, (60*60), 24);
+                       var tempHours = "";
+                       while ( (tempHours.length +hours.toString().length)< 2)
+                         tempHours += ("0");
+                       renderedValue += (tempHours + hours.toString());
+
+                       //minutes
+                       var minutes = integerDivision(dateDifference, (60), 60);
+                       renderedValue += (":");
+                       var tempMinutes = "";
+                       while ( (tempMinutes.length + minutes.toString().length)< 2)
+                         tempMinutes += ("0");
+                       renderedValue += (tempMinutes + minutes.toString());
+
+                       elLiner.innerHTML = renderedValue;
+                   };
+        YAHOO.widget.DataTable.Formatter.customDateFormatter = customDateFormatter;
+
+        // Column definitions
+        var myColumnDefs = [ // sortable:true enables sorting
+            {key:"source_amount", label:"<%=t 'listings.index.source_amount' %>", sortable:true},
+            {key:"source_type", label:"<%=t 'listings.index.source_type' %>", sortable:true},
+            {key:"rate", label:"<%=t 'listings.index.rate' %>", sortable:true},
+            {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
+            {key:"target_type", label:"<%=t 'listings.index.target_type' %>", sortable:true},
+            {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true, formatter:"customDateFormatter"},
+            {key:"link", label:"<%=t 'listings.index.link' %>", sortable:false, formatter:"listing_urlFormatter"}
+        ];
+
+        // DataSource instance
+        var myDataSource = new YAHOO.util.DataSource("/listings/get_index/");
+        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
+        myDataSource.responseSchema = {
+            resultsList: "records",
+            fields: [
+            {key:"source_amount"},
+            {key:"source_type"},
+            {key:"rate"},
+            {key:"target_amount"},
+            {key:"target_type"},
+            {key: "urgency"},
+            {key: "link"}
+            ],
+            metaFields: {
+                totalRecords: "totalRecords" // Access to value in the server response
+            }
+        };
+
+        // DataTable configuration
+        var myConfigs = {
+            initialRequest: "", // Initial request for first page of data for example sort=id&dir=asc&startIndex=0&results=25
+            dynamicData: false, // Enables dynamic server-driven data
+            sortedBy : {key:"urgency", dir:YAHOO.widget.DataTable.CLASS_ASC}, // Sets UI initial sort arrow
+            paginator: new YAHOO.widget.Paginator({ rowsPerPage:20 }) // Enables pagination
+        };
+
+        // DataTable instance
+        var myDataTable = new YAHOO.widget.DataTable("dynamicdata", myColumnDefs, myDataSource, myConfigs);
+        // Update totalRecords on the fly with value from server
+        myDataTable.handleDataReturnPayload = function(oRequest, oResponse, oPayload) {
+            oPayload.totalRecords = oResponse.meta.totalRecords;
+            return oPayload;
         }
-    };
 
-    // DataTable configuration
-    var myConfigs = {
-        initialRequest: "", // Initial request for first page of data for example sort=id&dir=asc&startIndex=0&results=25
-        dynamicData: false, // Enables dynamic server-driven data
-        sortedBy : {key:"urgency", dir:YAHOO.widget.DataTable.CLASS_ASC}, // Sets UI initial sort arrow
-        paginator: new YAHOO.widget.Paginator({ rowsPerPage:20 }) // Enables pagination
-    };
+        return {
+            ds: myDataSource,
+            dt: myDataTable
+        };
 
-    // DataTable instance
-    var myDataTable = new YAHOO.widget.DataTable("dynamicdata", myColumnDefs, myDataSource, myConfigs);
-    // Update totalRecords on the fly with value from server
-    myDataTable.handleDataReturnPayload = function(oRequest, oResponse, oPayload) {
-        oPayload.totalRecords = oResponse.meta.totalRecords;
-        return oPayload;
-    }
-
-    return {
-        ds: myDataSource,
-        dt: myDataTable
-    };
-
-}();
+    }();
+});
 </script>
 
 <!--END SOURCE CODE FOR data table =============================== -->
