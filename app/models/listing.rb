@@ -6,6 +6,6 @@ class Listing < ActiveRecord::Base
   end
 
   def contact
-    user.name + "<br />" + user.phone + "<br />" + user.contact
+    user.name + "<br />" + user.contact
   end
 end

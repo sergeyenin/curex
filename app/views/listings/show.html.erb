@@ -1,3 +1,18 @@
+<% unless @current_user_admin  %>
+    <%= javascript_tag do %>
+        document.observe("dom:loaded", function() {
+            var password=window.prompt('<%= t "listings.show.password_prompt" %>',"");
+            if ( (password==null) || (password=="") ) {
+
+                window.location = '<%=listings_path%>';
+            }
+            else {
+                window.location = document.URL + "/" + password;
+            }
+        });
+    <% end %>
+<% end %>
+
 <h1><%= t 'listings.show.listing'%>(<%= t 'listings.show.created' %>: <%= l @listing.created_at, :format=>:date_time24  %>)</h1>
 
 <% if (params[:password]) && ( @listing.password_or_master_password?(params[:password]) )%>
@@ -20,7 +35,6 @@
             <tr><td colspan="2"><hr></td></tr>
 
             <tr><td align="right"><%=  t 'listings.show.name' %></td><td><%= @listing.user.name  %></td></tr>
-            <tr><td align="right"><%=  t 'listings.show.phone' %></td><td><%= @listing.user.phone  %></td></tr>
             <tr><td align="right"><%=  t 'listings.show.contact' %></td><td><%= @listing.user.contact   %></td></tr>
     </table>
 </p>

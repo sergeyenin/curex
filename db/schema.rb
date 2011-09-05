@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 2) do
+ActiveRecord::Schema.define(:version => 3) do
 
   create_table "listings", :force => true do |t|
     t.integer  "user_id"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(:version => 2) do
     t.string   "password"
     t.string   "type"
     t.string   "contact"
-    t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

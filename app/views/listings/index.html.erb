@@ -68,9 +68,14 @@ YAHOO.util.Event.addListener(window, "load", function() {
             return returnValue;
         }
         //custom formatters
+        var markFormatter = function(elLiner, oRecord, oColumn, oData) {
+                elLiner.innerHTML = "<b>" + oData + "</b>";
+            };
+        YAHOO.widget.DataTable.Formatter.markFormatter = markFormatter;
+
         var listing_urlFormatter = function(elLiner, oRecord, oColumn, oData) {
                    var link = oData;
-                   elLiner.innerHTML = "<a href=\"" + link + "\"><%= t 'listings.index.show' %></a>";
+                   elLiner.innerHTML = link;
                };
         YAHOO.widget.DataTable.Formatter.listing_urlFormatter = listing_urlFormatter;
 
@@ -118,11 +123,10 @@ YAHOO.util.Event.addListener(window, "load", function() {
         var myColumnDefs = [ // sortable:true enables sorting
             {key:"source_amount", label:"<%=t 'listings.index.source_amount' %>", sortable:true},
             {key:"source_type", label:"<%=t 'listings.index.source_type' %>", sortable:true},
-            {key:"rate", label:"<%=t 'listings.index.rate' %>", sortable:true},
+            {key:"rate", label:"<%=t 'listings.index.rate' %>", sortable:true, formatter: "markFormatter"},
             {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
             {key:"target_type", label:"<%=t 'listings.index.target_type' %>", sortable:true},
             {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true, formatter:"customDateFormatter"},
-            {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
             {key:"contact", label:"<%=t 'listings.index.contact' %>", sortable:false},
             {key:"remarks", label:"<%=t 'listings.index.remarks' %>", sortable:false},
             {key:"link", label:"<%=t 'listings.index.link' %>", sortable:false, formatter:"listing_urlFormatter"}
@@ -154,7 +158,9 @@ YAHOO.util.Event.addListener(window, "load", function() {
             initialRequest: "", // Initial request for first page of data for example sort=id&dir=asc&startIndex=0&results=25
             dynamicData: false, // Enables dynamic server-driven data
             sortedBy : {key:"urgency", dir:YAHOO.widget.DataTable.CLASS_ASC}, // Sets UI initial sort arrow
-            paginator: new YAHOO.widget.Paginator({ rowsPerPage:20 }) // Enables pagination
+            paginator: new YAHOO.widget.Paginator({ rowsPerPage:20 }), // Enables pagination
+//            formatColumn: markFormatter
+
         };
 
         // DataTable instance

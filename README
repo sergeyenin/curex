@@ -1,6 +1,6 @@
 == Run
-
-1)bundle exec rake db:setup
-2)bundle exec rake db:migrate
-3) cron job to delete all data every day
+1)bundle install
+2)bundle exec rake db:setup
+3)bundle exec rake db:migrate
+4) cron job to delete all data every day
  */1 * * * * bundle exec rake truncate_data

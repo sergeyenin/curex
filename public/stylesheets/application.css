@@ -191,3 +191,13 @@ input[type="submit"] {
     -ms-interpolation-mode:bicubic;
 }
 
+
+/* Class for marked rows */
+.yui-skin-sam .yui-dt td.mark,
+.yui-skin-sam .yui-dt td.mark td.yui-dt-asc,
+.yui-skin-sam .yui-dt td.mark td.yui-dt-desc,
+.yui-skin-sam .yui-dt td.mark td.yui-dt-asc,
+.yui-skin-sam .yui-dt td.mark td.yui-dt-desc {
+    background-color: #a33;
+    color: #fff;
+}

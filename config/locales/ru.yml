@@ -44,7 +44,6 @@ ru:
       target_type: "приму"
       remarks: "Примечание"
       name: "Имя"
-      phone: "Телефон"
       password: "Пароль(для редактирования и удаления объявления)"
       contact: "Где меня найти"
       created: "Для того, чтобы удалить(редактировать) \
@@ -53,6 +52,7 @@ ru:
       link: "ссылке"
       errors: "ошибок"
     show:
+      password_prompt: "Введите пароль к объявлению"
       listing: "Объявление"
       created: "создано"
       source_amount: "Готов ОТДАТЬ"
@@ -62,7 +62,6 @@ ru:
       target_type: "приму"
       remarks: "Примечание"
       name: "Имя"
-      phone: "Телефон"
       contact: "Как найти"
       edit: "Редактировать"
       destroy: "Удалить"
