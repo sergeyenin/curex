@@ -10,6 +10,19 @@
 
 <script type="text/javascript">
 YAHOO.example.DynamicData = function() {
+    //div implementation
+    function integerDivision(x, y, z){
+        var d = Math.round(x/y - x%y/y);
+        if (d>z) d %= z;
+        var returnValue = "";
+        if (d>1){
+            returnValue = d.toString();
+        }
+        else{
+            returnValue = "00";
+        }
+        return returnValue;
+    }
     //custom formatters
     var listing_urlFormatter = function(elLiner, oRecord, oColumn, oData) {
                var link = oData;
@@ -18,37 +31,42 @@ YAHOO.example.DynamicData = function() {
     YAHOO.widget.DataTable.Formatter.listing_urlFormatter = listing_urlFormatter;
 
     var customDateFormatter = function(elLiner, oRecord, oColumn, oData) {
-                   var recordDate = new Date(oData);
-                   var currentTime = new Date();
+//                   var recordDate = new Date(oData);
+//                   var currentTime = new Date();
 
-                   var dateDifference = new Date(currentTime.getTime() - recordDate.getTime()/* + recordDate.getTimezoneOffset() * 60 * 1000*/);
+                   var dateDifference =oData;
                    var renderedValue = "";
                    //days
-                   if ( (dateDifference.getDate()-1) == 0){
+                   var days = integerDivision(dateDifference, (60*60*24), 1000);
+                   if ( days == 1){
 
-                       renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.one_day' %>");
+                       renderedValue += (days+ " <%= t 'listings.index.one_day' %>");
                    }
-                   else if ( ((dateDifference.getDate()-1) >= 1) && ((dateDifference.getDate()-1) <=3) ){
+                   else if ( ( days >= 2) && (days <=4) ){
 
-                       renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.2_4_days' %>");
+                       renderedValue += (days + " <%= t 'listings.index.2_4_days' %>");
                    }
-                   else if ((dateDifference.getDate()-1) > 3){
+                   else if (days > 4){
 
-                       renderedValue += (dateDifference.getDate() + " <%= t 'listings.index.many_days' %>");
+                       renderedValue += (days + " <%= t 'listings.index.many_days' %>");
                    }
 
                    renderedValue += (" ");
+
                    // hours
+                   var hours = integerDivision(dateDifference, (60*60), 24);
                    var tempHours = "";
-                   while ( (tempHours.length + dateDifference.getHours().toString().length)< 2)
+                   while ( (tempHours.length +hours.toString().length)< 2)
                      tempHours += ("0");
-                   renderedValue += (tempHours + dateDifference.getHours().toString());
+                   renderedValue += (tempHours + hours.toString());
+
                    //minutes
+                   var minutes = integerDivision(dateDifference, (60), 60);
                    renderedValue += (":");
                    var tempMinutes = "";
-                   while ( (tempMinutes.length + dateDifference.getMinutes().toString().length)< 2)
+                   while ( (tempMinutes.length + minutes.toString().length)< 2)
                      tempMinutes += ("0");
-                   renderedValue += (tempMinutes + dateDifference.getMinutes().toString());
+                   renderedValue += (tempMinutes + minutes.toString());
 
                    elLiner.innerHTML = renderedValue;
                };
