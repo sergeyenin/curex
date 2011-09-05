@@ -1,4 +1,4 @@
-<h1><%= t 'listings.show.listing'%></h1>
+<h1><%= t 'listings.show.listing'%>(<%= t 'listings.show.created' %>: <%= l @listing.created_at, :format=>:date_time24  %>)</h1>
 
 <% if (params[:password]) && (@listing.user.password == params[:password])%>
     <%= link_to t('listings.show.edit'), (edit_listing_path(@listing) + "/" + @listing.user.password) %>

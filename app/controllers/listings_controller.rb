@@ -3,6 +3,36 @@ class ListingsController < ApplicationController
   helper 'listings'
 
   def index
+    @yui = true
+  end
+
+  def get_index
+    returnValue = Hash.new
+    records = Array.new
+    @listings = Listing.all(:order => 'created_at')
+
+    @listings.each do |listing|
+      tempHash = {}
+      id = listing.id
+      tempHash["source_amount"] = listing.source_amount
+      tempHash["source_type"] = t("listings.types")[listing.source_type.to_i]
+      tempHash["rate"] = listing.rate
+      tempHash["target_amount"] = listing.target_amount
+      tempHash["target_type"] = t("listings.types")[listing.target_type.to_i]
+      tempHash["urgency"] = listing.created_at
+      tempHash["link"] = listing_url(listing)
+      records.push(tempHash)
+    end
+    returnValue["records"] = records
+    returnValue["pageSize"] = 20
+    returnValue["recordsReturned"] = @listings.size
+    returnValue["totalRecords"] = @listings.size
+    returnValue["startIndex"] = 0
+    returnValue["sort"] = "urgency"
+    returnValue["dir"] = "desc"
+    respond_to do |format|
+      format.json  { render :json => returnValue.to_json }
+    end
   end
 
   def new

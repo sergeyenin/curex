@@ -1,2 +1,84 @@
-<h1>t 'listings.new.new_listing'</h1>
-<p>Find me in app/views/listings/index.html.erb</p>
+<h1><%= t 'listings.index.listings' %></h1>
+<p><%= link_to( t('listings.index.new_listing'), new_listing_url) %></p>
+<p>
+
+</p>
+
+<!--BEGIN SOURCE CODE FOR data table =============================== -->
+
+<div id="dynamicdata"></div>
+
+<script type="text/javascript">
+YAHOO.example.DynamicData = function() {
+    //custom formatters
+    var listing_urlFormatter = function(elLiner, oRecord, oColumn, oData) {
+               var link = oData;
+               elLiner.innerHTML = "<a href=\"" + link + "\"><%= t 'listings.index.show' %></a>";
+           };
+    YAHOO.widget.DataTable.Formatter.listing_urlFormatter = listing_urlFormatter;
+
+    // Column definitions
+    var myColumnDefs = [ // sortable:true enables sorting
+        {key:"source_amount", label:"<%=t 'listings.index.source_amount' %>", sortable:true},
+        {key:"source_type", label:"<%=t 'listings.index.source_type' %>", sortable:true},
+        {key:"rate", label:"<%=t 'listings.index.rate' %>", sortable:true},
+        {key:"target_amount", label:"<%=t 'listings.index.target_amount' %>", sortable:true},
+        {key:"target_type", label:"<%=t 'listings.index.target_type' %>", sortable:true},
+        {key:"urgency", label:"<%=t 'listings.index.urgency' %>", sortable:true},
+        {key:"link", label:"<%=t 'listings.index.link' %>", sortable:false, formatter:"listing_urlFormatter"}
+    ];
+//
+//    // Custom parser
+//    var stringToDate = function(sData) {
+//        var array = sData.split("-");
+//        return new Date(array[1] + " " + array[0] + ", " + array[2]);
+//    };
+//
+
+
+    // DataSource instance
+    var myDataSource = new YAHOO.util.DataSource("/listings/get_index/");
+    myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
+    myDataSource.responseSchema = {
+        resultsList: "records",
+        fields: [
+        {key:"source_amount"},
+        {key:"source_type"},
+        {key:"rate"},
+        {key:"target_amount"},
+        {key:"target_type"},
+        {key: "urgency"},
+        {key: "link"}
+        ],
+        metaFields: {
+            totalRecords: "totalRecords" // Access to value in the server response
+        }
+    };
+
+    // DataTable configuration
+    var myConfigs = {
+        initialRequest: "", // Initial request for first page of data for example sort=id&dir=asc&startIndex=0&results=25
+        dynamicData: false, // Enables dynamic server-driven data
+        sortedBy : {key:"urgency", dir:YAHOO.widget.DataTable.CLASS_ASC}, // Sets UI initial sort arrow
+        paginator: new YAHOO.widget.Paginator({ rowsPerPage:20 }) // Enables pagination
+    };
+
+    // DataTable instance
+    var myDataTable = new YAHOO.widget.DataTable("dynamicdata", myColumnDefs, myDataSource, myConfigs);
+    // Update totalRecords on the fly with value from server
+    myDataTable.handleDataReturnPayload = function(oRequest, oResponse, oPayload) {
+        oPayload.totalRecords = oResponse.meta.totalRecords;
+        return oPayload;
+    }
+
+    return {
+        ds: myDataSource,
+        dt: myDataTable
+    };
+
+}();
+</script>
+
+<!--END SOURCE CODE FOR data table =============================== -->
+
+<br />

@@ -1,4 +1,9 @@
 ru:
+  time:
+    formats:
+      default: '%d/%m/%Y'
+      date_time12: "%I:%M%p %d/%m/%Y"
+      date_time24: "%H:%M %d/%m/%Y"
   form:
     edit:
       submit: "Обновить"
@@ -10,6 +15,17 @@ ru:
       2: "Американские гамбургеры"
       3: "Европейские шницели"
       4: "Российские щи"
+    index:
+      listings: "Объявления"
+      new_listing: "Создать новое объявление"
+      source_amount: "Сдаваемая сумма"
+      source_type: "Сдаваемая валюта"
+      rate: "Курс"
+      target_amount: "Требуемая сумма"
+      target_type: "Требуемая валюта"
+      urgency: "Актуальность"
+      link: "Ссылка"
+      show: "Просмотреть"
     new:
       new_listing: "Новое объявление"
       create_listing: "Создать"
@@ -29,6 +45,7 @@ ru:
       errors: "ошибок"
     show:
       listing: "Объявление"
+      created: "создано"
       source_amount: "Готов ОТДАТЬ"
       source_type: "валюта"
       rate: "курс"
