@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 3) do
+ActiveRecord::Schema.define(:version => 4) do
 
   create_table "listings", :force => true do |t|
     t.integer  "user_id"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 3) do
     t.string   "remarks"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "removed",       :default => false
   end
 
   create_table "users", :force => true do |t|

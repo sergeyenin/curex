@@ -68,6 +68,15 @@ YAHOO.util.Event.addListener(window, "load", function() {
             return returnValue;
         }
         //custom formatters
+        // Define a custom row formatter function
+        var rowFormatter = function(elTr, oRecord) {
+            if (oRecord.getData('removed') == true) {
+                Dom.addClass(elTr, 'mark');
+
+            }
+            return true;
+        };
+
         var markFormatter = function(elLiner, oRecord, oColumn, oData) {
                 elLiner.innerHTML = "<b>" + oData + "</b>";
             };
@@ -146,7 +155,8 @@ YAHOO.util.Event.addListener(window, "load", function() {
             {key: "urgency"},
             {key:"contact"},
             {key:"remarks"},
-            {key: "link"}
+            {key: "link"},
+            {key: "removed"}
             ],
             metaFields: {
                 totalRecords: "totalRecords" // Access to value in the server response
@@ -158,7 +168,8 @@ YAHOO.util.Event.addListener(window, "load", function() {
             initialRequest: "", // Initial request for first page of data for example sort=id&dir=asc&startIndex=0&results=25
             dynamicData: false, // Enables dynamic server-driven data
             sortedBy : {key:"urgency", dir:YAHOO.widget.DataTable.CLASS_ASC}, // Sets UI initial sort arrow
-            paginator: new YAHOO.widget.Paginator({ rowsPerPage:20 }) // Enables pagination
+            paginator: new YAHOO.widget.Paginator({ rowsPerPage:20 }), // Enables pagination
+            formatRow: rowFormatter
 //            formatColumn: markFormatter
 
         };

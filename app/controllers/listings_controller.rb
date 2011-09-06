@@ -19,14 +19,14 @@ class ListingsController < ApplicationController
       tempHash["rate"] = listing.rate
       tempHash["target_amount"] = listing.target_amount
       tempHash["target_type"] = t("listings.types")[listing.target_type.to_i]
+
       #time difference in seconds
       tempHash["urgency"] = Time.now() - listing.updated_at.to_datetime
       tempHash["contact"] = listing.contact
       tempHash["remarks"] = listing.remarks
 
-
-      tempHash["link"] = "<a href=\"" +  listing_url(listing) + "\">#{ t 'listings.index.edit' }</a>"
-
+      tempHash["link"] =  (listing.removed) ? "" : "<a href=\"" +  listing_url(listing) + "\">#{ t 'listings.index.edit' }</a>"
+      tempHash["removed"] = listing.removed
       records.push(tempHash)
     end
     returnValue["records"] = records
@@ -93,7 +93,7 @@ class ListingsController < ApplicationController
   def show
     if (Listing.exists?(params[:id]))
       @listing = Listing.find_by_id(params[:id])
-
+      redirect_to(listings_url) if (@listing.removed)
       redirect_to(listings_url) if (params[:password]) && (!@listing.password_or_master_password?(params[:password]))
 
       @current_user_admin = false
@@ -112,6 +112,7 @@ class ListingsController < ApplicationController
   def edit
       if (Listing.exists?(params[:id]))
         @listing = Listing.find(params[:id])
+        redirect_to(listings_url) if (@listing.removed)
         if (params[:password]) && (@listing.password_or_master_password?(params[:password]))
           @user = @listing.user
         else
@@ -125,6 +126,7 @@ class ListingsController < ApplicationController
   def update
     if (Listing.exists?(params[:id]))
         @listing = Listing.find(params[:id])
+        redirect_to(listings_url) if (@listing.removed)
         if (params[:password]) && (@listing.password_or_master_password?(params[:password]))
           #cookies
           cookies[:listing_user] = {
@@ -151,8 +153,9 @@ class ListingsController < ApplicationController
   def destroy
     if (Listing.exists?(params[:id]))
       @listing = Listing.find(params[:id])
+      redirect_to(listings_url) if (@listing.removed)
       if (params[:password]) && (@listing.password_or_master_password?(params[:password]))
-        @listing.destroy
+        @listing.update_attribute(:removed, true)
       end
     end
     redirect_to(listings_url)
