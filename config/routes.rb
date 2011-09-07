@@ -1,8 +1,8 @@
 Curex::Application.routes.draw do
   get 'listings/get_index' => 'listings#get_index'
-  delete 'listings/:id/:password' => 'listings#destroy'
-  get 'listings/:id/edit/:password' => 'listings#edit'
-  get 'listings/:id/:password' => 'listings#show'
+  delete 'listings/:id/:password' => 'listings#destroy', :constraints => { :password => /.*/ }
+  get 'listings/:id/edit/:password' => 'listings#edit', :constraints => { :password => /.*/ }
+  get 'listings/:id/:password' => 'listings#show', :constraints => { :password => /.*/ }
   resources :listings
   root :to => "listings#index"
   # The priority is based upon order of creation:
