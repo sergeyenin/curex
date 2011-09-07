@@ -45,9 +45,10 @@
             <tr><td align="right"><%=  t 'listings.new.remarks' %>: </td><td><%= listing_form.text_area  :remarks, :cols=>40, :rows=>5  %></td></tr>
             <tr><td colspan="2"><hr></td></tr>
             <%= listing_form.fields_for @listing.user do |user_fields| %>
-                <tr><td align="right" width="250"><%=  t 'listings.new.password' %></td><td><%= user_fields.text_field :password %></td></tr>
+                <tr><td align="right" width="250"><%=  t 'listings.new.password' %>
+                                <br /><u><%= t 'listings.new.password_format' %></u></td><td><%= user_fields.text_field :password %></td></tr>
                 <tr><td align="right"><%=  t 'listings.new.name' %></td><td><%= user_fields.text_field :name  %></td></tr>
-                <tr><td align="right"><u><%=  t 'listings.new.contact' %>*</u></td><td><%= user_fields.text_area  :contact, :cols=>40, :rows=>2 %></td></tr>
+                <tr><td align="right"><u><%=  t 'listings.new.contact' %></u></td><td><%= user_fields.text_area  :contact, :cols=>40, :rows=>2 %></td></tr>
             <% end %>
             <tr><td><%= t 'listings.new.required' %></td><td><%= listing_form.submit t("form.#{params[:action]}.submit")%></td></tr>
 

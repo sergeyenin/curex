@@ -135,14 +135,17 @@ class ListingsController < ApplicationController
           }
           #I hate accepts_nested_attributes_for!!!!
           @user = @listing.user
-          @user.update_attributes(params[:listing][:user])
-          params[:listing].delete(:user)
+          if ( @user.update_attributes(params[:listing][:user]) )
+            params[:listing].delete(:user)
 
-          if @listing.update_attributes(params[:listing])
-            redirect_to((listing_url(@listing) + "/" + @user.password),\
-              :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe )
+            if @listing.update_attributes(params[:listing])
+              redirect_to((listing_url(@listing) + "/" + @user.password),\
+                :alert=> (t('listings.new.password_alert') + @listing.user.password).html_safe )
+            else
+              render :action => "edit"
+            end
           else
-            render :action => "edit"
+              render :action => "edit"
           end
         end
     else
