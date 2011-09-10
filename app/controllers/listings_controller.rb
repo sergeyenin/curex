@@ -14,16 +14,16 @@ class ListingsController < ApplicationController
     @listings.each do |listing|
       tempHash = {}
       id = listing.id
-      tempHash["source_amount"] = listing.source_amount
+      tempHash["source_amount"] = listing.source_amount_safe
       tempHash["source_type"] = t("listings.types")[listing.source_type.to_i]
-      tempHash["rate"] = listing.rate
-      tempHash["target_amount"] = listing.target_amount
+      tempHash["rate"] = listing.rate_safe
+      tempHash["target_amount"] = listing.target_amount_safe
       tempHash["target_type"] = t("listings.types")[listing.target_type.to_i]
 
       #time difference in seconds
       tempHash["urgency"] = Time.now() - listing.updated_at.to_datetime
-      tempHash["contact"] = listing.contact
-      tempHash["remarks"] = listing.remarks
+      tempHash["contact"] = listing.contact_safe
+      tempHash["remarks"] = listing.remarks_safe
 
       tempHash["link"] =  (listing.removed) ? "" : "<a href=\"" +  listing_url(listing) + "\">#{ t 'listings.index.edit' }</a>"
       tempHash["removed"] = listing.removed
